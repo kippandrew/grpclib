@@ -2,6 +2,10 @@ __default__:
 	@echo "Please specify a target to make"
 
 clean:
+	rm -f ./grpclib/health/v1/*_pb2.py
+	rm -f ./grpclib/health/v1/*_grpc.py
+	rm -f ./grpclib/reflection/v1/*_pb2.py
+	rm -f ./grpclib/reflection/v1/*_grpc.py
 	rm -f ./grpclib/reflection/v1alpha/*_pb2.py
 	rm -f ./grpclib/reflection/v1alpha/*_grpc.py
 	rm -f ./example/helloworld/*_pb2.py
@@ -10,8 +14,9 @@ clean:
 	rm -f ./tests/*_grpc.py
 
 proto: clean
-	python3 -m grpc_tools.protoc -I. --python_out=. --python_grpc_out=. grpclib/reflection/v1alpha/reflection.proto
+	python3 -m grpc_tools.protoc -I. --python_out=. --python_grpc_out=. grpclib/health/v1/health.proto
 	python3 -m grpc_tools.protoc -I. --python_out=. --python_grpc_out=. grpclib/reflection/v1/reflection.proto
+	python3 -m grpc_tools.protoc -I. --python_out=. --python_grpc_out=. grpclib/reflection/v1alpha/reflection.proto
 	cd example; python3 -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. --python_grpc_out=. helloworld/helloworld.proto
 	cd tests; python3 -m grpc_tools.protoc -I. --python_out=. --python_grpc_out=. dummy.proto
 
